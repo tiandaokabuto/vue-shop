@@ -27,7 +27,7 @@ export const getGuessYouLike = () => ajax(BASE_URL + 'cart/youlike')
 
 /***** 登录界面接口 *********/
 // 1.获取手机验证码(GET)
-// Easy Mock 模拟发送验证码 
+// Easy Mock模拟发送验证码
 export const getPhoneCaptcha = (phoneNumber) => ajax(BASE_URL + 'send_code', {
   phoneNumber
 })

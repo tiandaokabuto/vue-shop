@@ -5,6 +5,7 @@
         <div>
           <img :src="imageURL" alt />
         </div>
+        <van-icon name="close" class="closeButton" @click="close" />
         <!-- <van-icon name="https://b.yzcdn.cn/vant/icon-demo-1126.png" class="closeButton"/> -->
         <van-tabs v-model="active" animated>
           <van-tab title="登录">
@@ -202,9 +203,10 @@
 </template>
 
 <script>
-import { Field, Button, Toast, Dialog, Divider } from 'vant'
-import ajax from '../serve/api/ajax'
+import { Field, Button, Toast, Dialog, Divider, Icon } from 'vant'
+// import ajax from '../serve/api/ajax'
 import { phoneCaptchaLogin, getPhoneCaptcha } from '../serve/api/index'
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -224,12 +226,19 @@ export default {
       imgCaptcha: '', // 图片验证码
       isUsernameLogin: true, // 账号登录/验证码登录
       shortMessageCaptchaResult: null, // 短信验证码
-      userInfo: null
+      userInfo: null,
+      currentUserInfo: {
+        token: '3412341234ahcnhjyues1787654ad',
+        phone: '13059228762',
+        sex: '1',
+        user_id: '001',
+        user_name: 'kabuto'
+      }
     }
   },
   mounted () {
-    let promise = ajax('https://www.easy-mock.com/mock/5dd39c7cafacf70feca1ee14/kfc/api/vip')
-    console.log(promise)
+    // let promise = ajax('https://www.easy-mock.com/mock/5dd39c7cafacf70feca1ee14/kfc/api/vip')
+    // console.log(promise)
   },
   computed: {
     // 1.手机号码验证
@@ -253,9 +262,11 @@ export default {
   components: {
     [Field.name]: Field,
     [Button.name]: Button,
-    [Divider.name]: Divider
+    [Divider.name]: Divider,
+    [Icon.name]: Icon
   },
   methods: {
+    ...mapActions(['setUserinfo']),
     // 1.转换顶部图片
     changeImage (index) {
       if (index === 0) {
@@ -287,6 +298,8 @@ export default {
                 message: '登录成功',
                 duration: 800
               })
+              this.setUserinfo(this.currentUserInfo)
+              this.$router.back()
             }
           })
         }
@@ -314,6 +327,8 @@ export default {
                 message: '登录成功',
                 duration: 800
               })
+              this.setUserinfo(this.currentUserInfo)
+              this.$router.back()
             }
           })
         }
@@ -418,6 +433,10 @@ export default {
           duration: 800
         })
       }
+    },
+    // 9.返回
+    close () {
+      this.$router.back()
     }
   }
 }
@@ -462,11 +481,11 @@ export default {
       width: 4rem;
       transform: translate(-50%, -70%);
       z-index: 1;
-      // @media screen and (max-width: 320px) {
-      //   top: 0.5rem;
-      //   transform: translate(-50%, -40%);
-      //   width: 5rem;
-      // }
+      @media screen and (max-width: 320px) {
+        top: 0.5rem;
+        transform: translate(-50%, -40%);
+        width: 5rem;
+      }
     }
     .closeButton {
       position: absolute;
