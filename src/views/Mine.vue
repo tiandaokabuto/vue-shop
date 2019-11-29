@@ -49,14 +49,14 @@
                 icon="label"
                 value="查看全部订单"
                 is-link
-                @click="goTomyOrder(-1)">
+                @click="goTomyOrder(0)">
       </van-cell>
       <van-grid :border=false>
         <van-grid-item v-for="(order,index) in orderData"
         :key="index"
         :icon="order.icon"
         :text="order.title"
-        @click="goTomyOrder(index)" />
+        @click="goTomyOrder(index + 1)" />
       </van-grid>
     </van-cell-group>
     <!-- 优惠券收货地址 -->
@@ -94,7 +94,10 @@
                 is-link
                 @click="onFeedBack" />
     </van-cell-group>
-    <router-view></router-view>
+    <keep-alive>
+      <router-view v-if="this.$route.meta.keepAlive"></router-view>
+    </keep-alive>
+    <router-view v-if="!this.$route.meta.keepAlive"></router-view>
   </div>
 </template>
 
@@ -130,10 +133,10 @@ export default {
     // 跳转到我的订单
     goTomyOrder (index) {
       if (this.userInfo.token) {
-        if (index === 3) {
+        if (index === 4) {
           // 跳转到售后退款界面
         } else {
-          this.$router.push({ name: 'myOrder', params: { active: index + 1 } })
+          this.$router.push({ name: 'myorder', query: { item: index } })
         }
       } else {
         this.login()
@@ -193,7 +196,6 @@ export default {
       if (this.userInfo) {
         let changeNumber = this.userInfo.phone
         let reg = /^(\d{3})\d{4}(\d{4})$/
-        console.log(changeNumber.replace(reg))
         return changeNumber.replace(reg, '$1****$2')
       } else {
         return ''

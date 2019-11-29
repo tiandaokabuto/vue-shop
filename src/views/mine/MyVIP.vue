@@ -7,8 +7,9 @@
     @click-left="back"
     :border=false
     style="height: 2.5rem"
+    v-if="!isShowLoading"
     />
-    <div class="vip-page">
+    <div class="vip-page" v-if="!isShowLoading">
       <!-- 头图 -->
       <div class="vip-page-header">
         <img src="../../assets/images/mine/vip.png" alt="">
@@ -26,6 +27,7 @@
         </van-grid>
         <div class="vip-privilege-levelup" @click="goToPayPage">5折开通绿卡</div>
       </div>
+      <!-- 领券 -->
       <div class="vip-privilege-item">
         <span class="vip-privilege-item-num">1</span>
         <span class="vip-privilege-item-desc">绿卡专享券 天天领取优惠</span>
@@ -35,11 +37,12 @@
           <i>每日0点更新</i>
         </p>
         <div class="vip-privilege-item-box">
-          <div class="vip-privilege-coupon">
-            <div class="vip-privilege-coupon-money"></div>
-            <div class="vip-privilege-coupon-condition"></div>
-            <div class="vip-privilege-coupon-desc"></div>
-            <div class="vip-privilege-coupon-get"></div>
+          <div class="vip-privilege-coupon"
+          v-for="item in todayTicket" :key="item.id">
+            <div class="vip-privilege-coupon-money"><i>¥</i>{{item.money}}</div>
+            <div class="vip-privilege-coupon-condition">满{{item.pay_min}}元使用</div>
+            <div class="vip-privilege-coupon-desc">{{item.description}}</div>
+            <div class="vip-privilege-coupon-get">立即领取</div>
           </div>
         </div>
         <!-- 每周领券 -->
@@ -48,24 +51,27 @@
           <i>每日0点更新</i>
         </p>
         <div class="vip-privilege-item-box">
-          <div class="vip-privilege-coupon">
-            <div class="vip-privilege-coupon-money"></div>
-            <div class="vip-privilege-coupon-condition"></div>
-            <div class="vip-privilege-coupon-desc"></div>
-            <div class="vip-privilege-coupon-get"></div>
+          <div class="vip-privilege-coupon"
+          v-for="item in weekTicket" :key="item.id">
+            <div class="vip-privilege-coupon-money"><i>¥</i>{{item.money}}</div>
+            <div class="vip-privilege-coupon-condition">满{{item.pay_min}}元可用</div>
+            <div class="vip-privilege-coupon-desc">{{item.description}}</div>
+            <div class="vip-privilege-coupon-get">立即领取</div>
           </div>
         </div>
       </div>
       <!-- 购物积分 -->
       <div class="vip-privilege-item">
+        <span class="vip-privilege-item-num">2</span>
+        <span class="vip-privilege-item-desc">专享购物积分加速</span>
         <div class="vip-privilege-shopping-box">
           <div class="vip-privilege-shopping-left-box">
-            <div class="vip-privilege-shopping-left-box-title"></div>
-            <div class="vip-privilege-shopping-left-box-subtitle"></div>
+            <div class="vip-privilege-shopping-left-box-title">您当前购物</div>
+            <div class="vip-privilege-shopping-left-box-subtitle">返积分为<i>1倍</i></div>
           </div>
           <div class="vip-privilege-shopping-right-box">
-            <div class="vip-privilege-shopping-right-box-title"></div>
-            <div class="vip-privilege-shopping-right-box-subtitle"></div>
+            <div class="vip-privilege-shopping-right-box-title">开通绿卡购物</div>
+            <div class="vip-privilege-shopping-right-box-subtitle">返积分为<i>2倍</i></div>
             <div class="line"></div>
               <img src="../../assets/images/mine/rockets.png" alt="">
           </div>
@@ -75,15 +81,22 @@
       </div>
       <!-- vip商品列表 -->
       <div class="vip-privilege-item">
+        <span class="vip-privilege-item-num">3</span>
+        <span class="vip-privilege-item-desc">绿卡专享特价</span>
+        <van-sticky :offset-top="40">
+          <scroll @menuItemClick="menuItemClick" :cate="cate"></scroll>
+        </van-sticky>
+        <vip-item :cateDetail="cateDetail"></vip-item>
       </div>
     </div>
+    <!-- 底部按钮 -->
     <transition name="fade">
       <div class="vip-bottom-join-btn"
       v-show="isShowBottomBtn"
       transiton="fade"
       >
         <div class="vip-bottom-join-desc">
-          <span class="vip-bottom-year">年卡</span><i>88元</i><span class="originPrice">180元</span>
+          <span class="vip-bottom-year">年卡</span>
           <i>88元</i>
           <span class="vip-bottom-year-origin">188元</span>
         </div>
@@ -92,14 +105,29 @@
         </div>
       </div>
     </transition>
+    <!-- 加载 -->
+    <van-overlay :show="isShowLoading">
+      <div class="loading-wrapper">
+        <van-loading type="spinner" class="loading" />
+      </div>
+    </van-overlay>
   </div>
 </template>
 
 <script>
+import Scroll from '../../components/common/HorizontalScroll'
+import VipItem from './vip/MyVIPItem'
+import { getVipContent } from '../../serve/api/index'
+import { Sticky, Overlay, Loading } from 'vant'
 export default {
   data () {
     return {
-
+      isShowLoading: true,
+      isShowBottomBtn: false,
+      todayTicket: [],
+      weekTicket: [],
+      cate: [],
+      cateDetail: []
     }
   },
   methods: {
@@ -107,11 +135,27 @@ export default {
       this.$router.back()
     },
     goToPayPage () {
-
+      this.$router.push({ name: 'vippay' })
+    },
+    menuItemClick (index) {
+      console.log(index)
     }
   },
   components: {
-
+    Scroll,
+    VipItem,
+    [Sticky.name]: Sticky,
+    [Overlay.name]: Overlay,
+    [Loading.name]: Loading
+  },
+  mounted () {
+    getVipContent().then(response => {
+      this.cate = response.data.cate
+      this.cateDetail = response.data.cate_detail
+      this.todayTicket = response.data.today_ticket.tickets
+      this.weekTicket = response.data.week_ticket.tickets
+      this.isShowLoading = false
+    })
   }
 }
 </script>
@@ -386,6 +430,15 @@ export default {
     }
     .fade-leave-active {
       transition: opacity 3s;
+    }
+  }
+  .loading-wrapper {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    height: 100%;
+    .loading {
+
     }
   }
 }

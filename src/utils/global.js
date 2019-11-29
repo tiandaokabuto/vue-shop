@@ -19,8 +19,8 @@ export const removeLocalStore = (name) => {
   return window.localStorage.removeItem(name)
 }
 
+// 格式化日期
 export const Formate = (date, fmt) => {
-  //格式化日期
   var o = {
     'y+': date.getFullYear(),
     'M+': date.getMonth() + 1, //月份

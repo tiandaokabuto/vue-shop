@@ -37,13 +37,15 @@ const routes = [
       }, {
         path: 'myVip',
         name: 'myvip',
-        component: () => import('../views/mine/MyVIP.vue')
+        component: () => import('../views/mine/MyVIP.vue'),
+        meta: {
+          keepAlive: true
+        }
+      }, {
+        path: 'myOrder',
+        name: 'myorder',
+        component: () => import('../views/mine/MyOrder.vue')
       }]
-    },
-    {
-      path: '/order',
-      name: 'order',
-      component: () => import('../views/Order.vue')
     },
     {
       path: '/category',
@@ -53,6 +55,11 @@ const routes = [
   {
     path: '/login',
     component: () => import('../views/Login.vue')
+  },
+  {
+    path: '/vipPay',
+    name: 'vippay',
+    component: () => import('../views/mine/vip/MyVIPPay.vue')
   }
 ]
 
