@@ -94,10 +94,11 @@
                 is-link
                 @click="onFeedBack" />
     </van-cell-group>
-    <keep-alive>
+    <!-- <keep-alive>
       <router-view v-if="this.$route.meta.keepAlive"></router-view>
     </keep-alive>
-    <router-view v-if="!this.$route.meta.keepAlive"></router-view>
+    <router-view v-if="!this.$route.meta.keepAlive"></router-view> -->
+    <router-view></router-view>
   </div>
 </template>
 

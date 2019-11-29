@@ -1,5 +1,5 @@
 <template>
-  <div class="vip-page-wrapper">
+  <div class="vip-page-wrapper" ref="wrapper">
     <!-- 顶栏 -->
     <van-nav-bar title="绿卡VIP"
     :fixed=true
@@ -93,7 +93,7 @@
     <transition name="fade">
       <div class="vip-bottom-join-btn"
       v-show="isShowBottomBtn"
-      transiton="fade"
+
       >
         <div class="vip-bottom-join-desc">
           <span class="vip-bottom-year">年卡</span>
@@ -156,6 +156,14 @@ export default {
       this.weekTicket = response.data.week_ticket.tickets
       this.isShowLoading = false
     })
+    this.$refs.wrapper.onscroll = () => {
+      let top = this.$refs.wrapper.scrollTop
+      if (top > 350) {
+        this.isShowBottomBtn = true
+      } else {
+        this.isShowBottomBtn = false
+      }
+    }
   }
 }
 </script>
@@ -419,18 +427,6 @@ export default {
       color: white;
       font-size: 0.8rem;
     }
-    .fade-enter {
-      opacity: 0;
-    }
-    .fade-enter-active {
-      transition: opacity 3s;
-    }
-    .fade-leave-to {
-      opacity: 0;
-    }
-    .fade-leave-active {
-      transition: opacity 3s;
-    }
   }
   .loading-wrapper {
     display: flex;
@@ -441,5 +437,11 @@ export default {
 
     }
   }
+}
+.fade-enter-active, .fade-leave-active {
+  transition: opacity .5s;
+}
+.fade-enter, .fade-leave-to {
+  opacity: 0;
 }
 </style>

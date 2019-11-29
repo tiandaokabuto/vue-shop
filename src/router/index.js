@@ -8,6 +8,7 @@ const routes = [
     path: '/',
     redirect: '/index'
   },
+  // 框架
   {
     path: '/index',
     name: 'index',
@@ -17,6 +18,7 @@ const routes = [
       name: 'home',
       component: () => import('../views/Home.vue')
     },
+    // mine页面
     {
       path: '/mine',
       name: 'mine',
@@ -47,15 +49,30 @@ const routes = [
         component: () => import('../views/mine/MyOrder.vue')
       }]
     },
+    // category页面
     {
       path: '/category',
       component: () => import('../views/Category.vue')
+    },
+    // cart页面
+    {
+      path: '/cart',
+      name: 'cart',
+      component: () => import('../views/Cart.vue')
+    },
+    // eat页面
+    {
+      path: '/eat',
+      name: 'eat',
+      component: () => import('../views/Eat.vue')
     }]
   },
+  // 登录页面
   {
     path: '/login',
     component: () => import('../views/Login.vue')
   },
+  // 开通vip页面
   {
     path: '/vipPay',
     name: 'vippay',
