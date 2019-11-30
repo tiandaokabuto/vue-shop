@@ -6,11 +6,12 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/index'
+    redirect: '/home'
   },
   // 框架
   {
     path: '/index',
+    redirect: '/home',
     name: 'index',
     component: () => import('../views/Index.vue'),
     children: [{
@@ -52,6 +53,7 @@ const routes = [
     // category页面
     {
       path: '/category',
+      name: 'category',
       component: () => import('../views/Category.vue')
     },
     // cart页面

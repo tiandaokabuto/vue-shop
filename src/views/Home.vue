@@ -1,54 +1,57 @@
 <template>
-  <div class="page"></div>
+  <div class="home-page-wrapper" ref="wrapper">
+    <!-- <loading :show="false"></loading> -->
+    <div class="home-content">home</div>
+    <div class="fix-btn" @click="top">回到顶部</div>
+  </div>
 </template>
 
 <script>
 // import axios from 'axios'
+// import Loading from '../components/common/Loading'
 export default {
   data () {
     return {
-      bookworm: null,
-      testNum: 1
+
     }
   },
   components: {
+    // Loading
   },
   methods: {
-
+    top () {
+      this.$refs.wrapper.scrollTop = 0
+    }
   },
   mounted () {
-    //1 script start   script start
-    //2 async1 start   async1 start
-    //3 async2         asyncs2
-    //4 async1 end     promise1
-    //5 promise1       script end
-    //6 script end     promise2
-    //7 setTimeout     async1 end
-    //8 promise2       setTimeout
-    // async function async1 () {
-    //   console.log('async1 start')
-    //   await async2()
-    //   console.log('async1 end')
-    // }
-    // async function async2 () {
-    //   console.log('async2')
-    // }
-    // // 开始执行
-    // console.log('script start')
-    // setTimeout(function () {
-    //   console.log('setTimeout')
-    // }, 0)
-    // async1()
-    // new Promise(function (resolve) {
-    //   console.log('promise1')
-    //   resolve()
-    // }).then(function () {
-    //   console.log('promise2')
+    // this.$refs.wrapper.addEventListener('scroll', () => {
+    //   console.log(this.$refs.wrapper.scrollTop)
     // })
-    // console.log('script end')
+    window.onscroll = (e) => {
+      console.log(e)
+    }
   }
 }
 </script>
 
 <style lang="scss" scoped>
+.home-page-wrapper {
+  overflow-y: auto;
+  // height: 50rem;
+  padding-bottom: 3rem;
+  .home-content {
+    height: 100rem;
+    background: black;
+    color: white;
+  }
+  .fix-btn {
+    position: fixed;
+    right: 0;
+    color: white;
+    bottom: 5rem;
+    border: 1px solid grey;
+    padding: 0.5rem;
+    background: grey;
+  }
+}
 </style>

@@ -89,6 +89,26 @@ export default {
     }
   },
   mounted () {
+    console.log(this.$route.name)
+    switch (this.$route.name) {
+      case 'home':
+        this.active = 0
+        break
+      case 'category':
+        this.active = 1
+        break
+      case 'eat':
+        this.active = 2
+        break
+      case 'cart':
+        this.active = 3
+        break
+      case 'mine':
+        this.active = 4
+        break
+      default:
+        break
+    }
     this.autoLogin()
   }
 }
