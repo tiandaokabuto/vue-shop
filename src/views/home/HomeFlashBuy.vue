@@ -18,8 +18,10 @@
           <img :src="item.small_image" class="item-img"/>
           <span class="item-title">{{item.name}}</span>
           <div class="item-price">
-            <p class="item-price-now"></p>
-            <p class="item-price-og"></p>
+            <div class="price">
+              <p class="item-price-now">{{item.price}}</p>
+            <p class="item-price-og">{{item.origin_price}}</p>
+            </div>
             <div class="buy-cart">
               <svg viewBox="0 0 52 52" class="icon icon-60">
                 <defs>
@@ -175,21 +177,24 @@ export default {
           -webkit-box-orient: vertical;
         }
         .item-price {
-            position: relative;
-            padding-left: 0.5rem;
-          .item-price-now {
-            color: #f37078;
-            font-size: 0.928rem;
-          }
-          .item-price-og {
-            font-size: 0.6875rem;
-            color: #999999;
-            text-decoration: line-through;
+          padding-left: 0.5rem;
+          display: flex;
+          justify-content: center;
+          align-items: center;
+          .price {
+            flex: 1;
+            .item-price-now {
+              color: #f37078;
+              font-size: 0.928rem;
+            }
+            .item-price-og {
+              font-size: 0.6875rem;
+              color: #999999;
+              text-decoration: line-through;
+            }
           }
           .buy-cart {
-            position: absolute;
-            right: 0.6rem;
-            top: 0.1rem;
+            flex: 0 0 1.5rem;
             width: 1.5rem;
             height: 1.5rem;
           }

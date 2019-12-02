@@ -43,6 +43,8 @@ export default {
       }
       // 给Item的包裹层设置宽度
       this.$refs.scrollMenuList.style.width = scrollMenuWidth + 'px'
+      console.log(el[0].clientWidth)
+      console.log(scrollMenuWidth)
       if (!this.horizontalScroll) {
         this.horizontalScroll = new BetterScroll('.scroll-menu-wrapper', {
           startX: 0,
