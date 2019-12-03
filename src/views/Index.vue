@@ -73,23 +73,16 @@ export default {
     tab (index, name) {
       this.currIndex = index
       this.active = index
-      this.$router.push(name)
+      console.log(name)
+      this.$router.push({ name: name })
     }
   },
   computed: {
     goodsNum () {
-      // let num = 0
-      // Object.values(this.shopCart).forEach((goods, index) => {
-      //   num += goods.num
-      // })
-      // if (num > 0) {
-      //   return num
-      // }
       return 1
     }
   },
   mounted () {
-    console.log(this.$route.name)
     switch (this.$route.name) {
       case 'home':
         this.active = 0
@@ -115,4 +108,8 @@ export default {
 </script>
 
 <style lang="scss" scoped>
+.item {
+  height: 100%;
+  overflow-y: scroll;
+}
 </style>

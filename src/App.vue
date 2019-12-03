@@ -1,5 +1,5 @@
 <template>
-  <div id="app">
+  <div id="app" ref="app">
     <keep-alive >
       <router-view v-if="this.$route.meta.keepAlive"/>
     </keep-alive>
@@ -24,6 +24,5 @@ document.addEventListener('DOMContentLoaded', () => {
 #app {
   width: 100%;
   height: 100%;
-  overflow-y: scroll;
 }
 </style>

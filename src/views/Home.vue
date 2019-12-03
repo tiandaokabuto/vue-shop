@@ -1,6 +1,6 @@
 <template>
-  <div class="home-page-wrapper" ref="wrapper" v-if="showing">
-    <div v-if="showing">
+  <div class="home-page-wrapper" ref="wrapper">
+    <div  v-if="showing">
       <div class="home-header-content">
         <home-header></home-header>
         <home-swiper :img_list="img_list"></home-swiper>
@@ -11,13 +11,14 @@
       <home-special :specialItem="specialItem"></home-special>
       <home-goods :allList="tabbar_all_product_list" :flashList="flash_sale_product_list"></home-goods>
     </div>
+    <loading :show="!showing"></loading>
     <to-top></to-top>
   </div>
 </template>
 
 <script>
 // import axios from 'axios'
-// import Loading from '../components/common/Loading'
+import Loading from '../components/common/Loading'
 import ToTop from '../components/common/ToTop'
 import HomeHeader from './home/HomeHeader'
 import HomeSwiper from './home/HomeSwiper'
@@ -41,7 +42,7 @@ export default {
     }
   },
   components: {
-    // Loading
+    Loading,
     HomeSwiper,
     HomeHeader,
     HomeTips,
@@ -66,10 +67,6 @@ export default {
       }
       this.showing = true
     })
-    this.$refs.wrapper.onscroll(() => {
-      // console.log(this.$refs.wrapper.scrollTop)
-      console.log('1')
-    })
   }
 }
 </script>
@@ -79,6 +76,7 @@ export default {
   overflow-y: scroll;
   overflow-x: hidden;
   // height: 100rem;
+  height: 100%;
   padding-bottom: 3rem;
   .home-header-content {
     width: 100%;

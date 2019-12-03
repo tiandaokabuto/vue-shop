@@ -16,7 +16,7 @@ import BetterScroll from 'better-scroll'
 export default {
   data () {
     return {
-
+      currentPage: 0
     }
   },
   props: {
@@ -42,15 +42,7 @@ export default {
           scrollX: true,
           scrollY: false,
           momentum: false,
-          snap: true,
-          snapLoop: true,
-          snapThreshold: 0.3,
-          snapSpeed: 400
-        })
-        this.swiperScroll.on('scrollEnd', () => {
-          // 获取当前页数
-          let pageIndex = this.swiperScroll.getCurrentPage().pageX
-          console.log(pageIndex)
+          snap: true
         })
       } else {
         this.swiperScroll.refresh()
@@ -60,6 +52,12 @@ export default {
   mounted () {
     this.$nextTick(() => {
       this.init()
+      this.swiperScroll.on('scrollEnd', () => {
+        // 获取当前页数
+        let pageIndex = this.swiperScroll.getCurrentPage().pageX
+        this.currentPage = pageIndex
+        console.log(pageIndex)
+      })
     })
   }
 }
@@ -67,9 +65,13 @@ export default {
 
 <style lang="scss" scoped>
 .home-swiper-wrapper {
-  padding-top: 3.2rem;
+  width: 94%;
+  padding-top: 3rem;
+  margin: 0 auto;
   .swiper-wrapper {
+    border-radius: 1rem;
     white-space: nowrap;
+    overflow: hidden;
     .swiper-list {
       .swiper-item {
         display: inline-block;

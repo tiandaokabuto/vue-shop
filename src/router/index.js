@@ -6,22 +6,22 @@ Vue.use(VueRouter)
 const routes = [
   {
     path: '/',
-    redirect: '/home'
+    redirect: '/index/home'
   },
   // 框架
   {
     path: '/index',
-    redirect: '/home',
+    redirect: '/index/home',
     name: 'index',
     component: () => import('../views/Index.vue'),
     children: [{
-      path: '/home',
+      path: 'home',
       name: 'home',
       component: () => import('../views/Home.vue')
     },
     // mine页面
     {
-      path: '/mine',
+      path: 'mine',
       name: 'mine',
       component: () => import('../views/Mine.vue'),
       children: [{
@@ -52,19 +52,19 @@ const routes = [
     },
     // category页面
     {
-      path: '/category',
+      path: 'category',
       name: 'category',
       component: () => import('../views/Category.vue')
     },
     // cart页面
     {
-      path: '/cart',
+      path: 'cart',
       name: 'cart',
       component: () => import('../views/Cart.vue')
     },
     // eat页面
     {
-      path: '/eat',
+      path: 'eat',
       name: 'eat',
       component: () => import('../views/Eat.vue')
     }]

@@ -13,7 +13,7 @@
           </ul>
         </div>
         <div class="category-right-wrapper">
-          <horiz-scroll :cate="categoryDetailData"></horiz-scroll>
+          <horiz-scroll :cate="categoryDetailData" ref="horizScoll"></horiz-scroll>
         </div>
       </div>
   </div>
@@ -21,7 +21,7 @@
 
 <script>
 import HorizScroll from '../components/common/HorizontalScroll'
-import Header from './category/CategoryHeader'
+import Header from '../components/common/SearchHeader'
 import BetterScroll from 'better-scroll'
 import { getCategoryData, getCategoryDetailData } from '../serve/api/index'
 export default {
@@ -76,6 +76,7 @@ export default {
       getCategoryDetailData(param).then(res => {
         if (res.success) {
           this.categoryDetailData = res.data.cate
+          this.$refs.horizScoll.refreshScroll()
         }
       })
     }
@@ -125,7 +126,6 @@ export default {
       }
     }
     .category-right-wrapper {
-
     }
   }
 }

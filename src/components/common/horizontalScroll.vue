@@ -1,7 +1,7 @@
 <template>
   <div id="horizontalScroll" ref="scrollRef">
     <!-- 水平滑动组件 -->
-    <div class="scroll-menu-wrapper" ref="scrollMenu">
+    <div class="scroll-menu-wrapper" :class="{noBorder: borderFlag}" ref="scrollMenu">
       <ul ref="scrollMenuList">
         <li class="scroll-menu-item"
             :class="{ selected: currentItem === index}"
@@ -21,11 +21,18 @@ import BetterScroll from 'better-scroll'
 export default {
   data () {
     return {
-      currentItem: 0
+      currentItem: 0,
+      ulWidth: 0
     }
   },
   props: {
-    cate: Array
+    cate: Array,
+    borderFlag: Boolean
+  },
+  watch: {
+    cate () {
+      this.initScroll()
+    }
   },
   methods: {
     menuItemClick (index) {
@@ -43,6 +50,7 @@ export default {
       }
       // 给Item的包裹层设置宽度
       this.$refs.scrollMenuList.style.width = scrollMenuWidth + 'px'
+      this.ulWidth = scrollMenuWidth
       console.log(el[0].clientWidth)
       console.log(scrollMenuWidth)
       if (!this.horizontalScroll) {
@@ -55,6 +63,9 @@ export default {
       } else {
         this.horizontalScroll.refresh()
       }
+    },
+    refreshScroll () {
+      this.horizontalScroll.refresh()
     }
   },
   mounted () {
@@ -86,6 +97,8 @@ export default {
       color: #3cb963;
     }
   }
-
+  .noBorder {
+    border: none;
+  }
 }
 </style>
