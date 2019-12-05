@@ -17,6 +17,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import BetterScroll from 'better-scroll'
 export default {
   data () {
@@ -31,12 +32,16 @@ export default {
   },
   watch: {
     cate () {
-      this.initScroll()
+      this.$nextTick(() => {
+        this.initScroll()
+      })
     }
   },
   methods: {
+    ...mapActions(['setSubtitleIndex']),
     menuItemClick (index) {
       this.currentItem = index
+      this.setSubtitleIndex(index)
       let el = this.$refs.menuItem[index]
       this.horizontalScroll.scrollToElement(el, 500)
       this.$emit('menuItemClick', index)
@@ -44,6 +49,7 @@ export default {
     initScroll () {
       let scrollMenuWidth = 0
       let el = this.$refs.menuItem
+      console.log(el)
       // 计算Item的宽度总和
       for (let i = 0; i < el.length; i++) {
         scrollMenuWidth += el[i].clientWidth
@@ -51,21 +57,20 @@ export default {
       // 给Item的包裹层设置宽度
       this.$refs.scrollMenuList.style.width = scrollMenuWidth + 'px'
       this.ulWidth = scrollMenuWidth
-      console.log(el[0].clientWidth)
-      console.log(scrollMenuWidth)
-      if (!this.horizontalScroll) {
-        this.horizontalScroll = new BetterScroll('.scroll-menu-wrapper', {
-          startX: 0,
-          click: true,
-          scrollX: true,
-          probeType: 3
-        })
-      } else {
-        this.horizontalScroll.refresh()
-      }
+      // if (this.horizontalScroll) {
+
+      // }
+      this.horizontalScroll = new BetterScroll('.scroll-menu-wrapper', {
+        startX: 0,
+        click: true,
+        scrollX: true,
+        probeType: 3
+      })
+      this.currentItem = 0
     },
-    refreshScroll () {
-      this.horizontalScroll.refresh()
+    refresh () {
+      let el = this.$refs.menuItem[0]
+      this.horizontalScroll.scrollToElement(el, 500)
     }
   },
   mounted () {

@@ -22,7 +22,7 @@
               <p class="item-price-now">{{item.price}}</p>
             <p class="item-price-og">{{item.origin_price}}</p>
             </div>
-            <div class="buy-cart">
+            <div class="buy-cart" @click="add(item)">
               <svg viewBox="0 0 52 52" class="icon icon-60">
                 <defs>
                   <radialGradient cx="27.0288363%"
@@ -65,6 +65,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 import { CountDown } from 'vant'
 import BetterScroll from 'better-scroll'
 export default {
@@ -85,6 +86,7 @@ export default {
     })
   },
   methods: {
+    ...mapActions(['addToCart']),
     init () {
       let width = 0
       let el = this.$refs.itemWrap
@@ -104,6 +106,9 @@ export default {
       } else {
         this.flashScroll.refresh()
       }
+    },
+    add (item) {
+      this.addToCart(item)
     }
   }
 }

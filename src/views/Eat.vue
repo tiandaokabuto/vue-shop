@@ -1,51 +1,55 @@
 <template>
   <div class="eat-page-wrapper">
-    <div class="eat-page-head-wrapper" style="z-index: 999">
-      <Header :text="'搜索菜谱、食材'"></Header>
-      <div class="today-eat-title-wrapper">
-        <div class="title">今日菜单</div>
-      </div>
-      <Scroll :cate="todayMenuCategoryList" v-if="showing" style="width: 80%"
-      :borderFlag="true"></Scroll>
-      <div class="menu-all-btn" @click="showAll">
-        {{msg}}
-        <span class="down-menu"
-              v-if="menuDown">
-          <svg t="1569722977319"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="759"
-          width="16"
-          height="16">
-            <path d="M511.31 989.39999995a61.19 61.19 0 0 1-43.25-17.79l-237.12-237.2a35 35 0 0 1 49.55-49.55l230.89 230.9 230.9-230.89a35 35 0 1 1 49.55 49.55L554.7 971.53999995a61.41 61.41 0 0 1-43.39 17.86z"
-                  fill="#8a8a8a"
-                  p-id="760"></path>
-          </svg>
-        </span>
-        <span class="up-menu"
-              v-else>
-          <svg t="1569723063527"
-          class="icon"
-          viewBox="0 0 1024 1024"
-          version="1.1"
-          xmlns="http://www.w3.org/2000/svg"
-          p-id="759"
-          width="16"
-          height="16">
-            <path d="M512.69 653.26666662a61.19 61.19 0 0 1 43.25 17.79l237.12 237.2a35 35 0 0 1-49.55 49.55l-230.89-230.9-230.9 230.89a35 35 0 1 1-49.55-49.55000001L469.3 671.12666662a61.41 61.41 0 0 1 43.39-17.86z"
-                  fill="#8a8a8a"
-                  p-id="760"></path>
-          </svg>
-        </span>
+    <div v-if="showing">
+      <div class="eat-page-head-wrapper" style="z-index: 999"  v-if="showing">
+        <Header :text="'搜索菜谱、食材'"></Header>
+        <div class="today-eat-title-wrapper">
+          <div class="title">今日菜单</div>
         </div>
+        <Scroll :cate="todayMenuCategoryList" style="width: 80%"
+        :borderFlag="true"></Scroll>
+        <div class="menu-all-btn" @click="showAll">
+          {{msg}}
+          <span class="down-menu"
+                v-if="menuDown">
+            <svg t="1569722977319"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="759"
+            width="16"
+            height="16">
+              <path d="M511.31 989.39999995a61.19 61.19 0 0 1-43.25-17.79l-237.12-237.2a35 35 0 0 1 49.55-49.55l230.89 230.9 230.9-230.89a35 35 0 1 1 49.55 49.55L554.7 971.53999995a61.41 61.41 0 0 1-43.39 17.86z"
+                    fill="#8a8a8a"
+                    p-id="760"></path>
+            </svg>
+          </span>
+          <span class="up-menu"
+                v-else>
+            <svg t="1569723063527"
+            class="icon"
+            viewBox="0 0 1024 1024"
+            version="1.1"
+            xmlns="http://www.w3.org/2000/svg"
+            p-id="759"
+            width="16"
+            height="16">
+              <path d="M512.69 653.26666662a61.19 61.19 0 0 1 43.25 17.79l237.12 237.2a35 35 0 0 1-49.55 49.55l-230.89-230.9-230.9 230.89a35 35 0 1 1-49.55-49.55000001L469.3 671.12666662a61.41 61.41 0 0 1 43.39-17.86z"
+                    fill="#8a8a8a"
+                    p-id="760"></path>
+            </svg>
+          </span>
+          </div>
+      </div>
+      <eat-list></eat-list>
     </div>
-    <eat-list></eat-list>
+    <Loading :show="!showing"></Loading>
   </div>
 </template>
 
 <script>
+import Loading from './../components/common/Loading'
 import EatList from './eat/TodayEatList'
 import Header from '../components/common/SearchHeader'
 import Scroll from '../components/common/HorizontalScroll'
@@ -62,7 +66,8 @@ export default {
   components: {
     Header,
     Scroll,
-    EatList
+    EatList,
+    Loading
   },
   watch: {
     menuDown () {

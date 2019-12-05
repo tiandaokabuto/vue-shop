@@ -8,5 +8,6 @@ export default {
     // user_name: 'kabuto'
   },
   Address: {},
-  active: 0
+  active: 0,
+  subtitleIndex: 0
 }

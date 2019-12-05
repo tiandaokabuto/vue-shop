@@ -9,7 +9,7 @@
             <p class="item-price-now">{{item.price}}</p>
             <p class="item-price-og">{{item.origin_price}}</p>
           </div>
-          <div class="buy-cart">
+          <div class="buy-cart" @click="add(item)">
             <svg viewBox="0 0 52 52" class="icon icon-60">
               <defs>
                 <radialGradient cx="27.0288363%"
@@ -50,6 +50,7 @@
 </template>
 
 <script>
+import { mapActions } from 'vuex'
 export default {
   data () {
     return {
@@ -59,8 +60,11 @@ export default {
   props: {
     goodsList: Array
   },
-  components: {
-
+  methods: {
+    ...mapActions(['addToCart']),
+    add (item) {
+      this.addToCart(item)
+    }
   }
 }
 </script>
@@ -92,13 +96,19 @@ export default {
     .item-title {
       flex: 1;
       width: 100%;
-      font-size: 0.8rem;
+      font-size: 0.7rem;
       padding-left: .5rem;
       padding-right: .5rem;
       word-wrap: break-all;
       text-overflow: ellipsis;
-      margin-bottom: 0.1rem;
+      // margin-bottom: 0.1rem;
       box-sizing: border-box;
+
+      word-break: break-all;
+      overflow: hidden;
+      text-overflow: ellipsis;
+      line-height: 1rem;
+      padding-bottom: 0.3rem;
     }
     .item-subtitle {
       box-sizing: border-box;

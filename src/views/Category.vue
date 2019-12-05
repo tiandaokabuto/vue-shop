@@ -1,6 +1,6 @@
 <template>
   <div class="category-page-wrapper">
-      <Header></Header>
+      <Header :text="'输入商品名称'"></Header>
       <div v-if="showing" class="category-list-wrapper">
         <div class="category-left-wrapper">
           <ul class="left-content">
@@ -14,14 +14,20 @@
         </div>
         <div class="category-right-wrapper">
           <horiz-scroll :cate="categoryDetailData" ref="horizScoll"></horiz-scroll>
+          <category-item :categoryDetailData="categoryDetailData" ref="categoryItem"></category-item>
         </div>
       </div>
+      <loading :show="!showing"></loading>
+      <loading-cate v-show="showingRightLoading"></loading-cate>
   </div>
 </template>
 
 <script>
 import HorizScroll from '../components/common/HorizontalScroll'
 import Header from '../components/common/SearchHeader'
+import LoadingCate from '../components/common/LoadingCate'
+import Loading from '../components/common/Loading'
+import CategoryItem from './category/CategoryItem'
 import BetterScroll from 'better-scroll'
 import { getCategoryData, getCategoryDetailData } from '../serve/api/index'
 export default {
@@ -30,21 +36,24 @@ export default {
       showing: false,
       categoryData: [],
       categoryDetailData: [],
-      currentIndex: 0
+      currentIndex: 0,
+      showingRightLoading: false
     }
   },
   components: {
     Header,
-    HorizScroll
+    HorizScroll,
+    LoadingCate,
+    Loading,
+    CategoryItem
   },
   mounted () {
     getCategoryData().then(res => {
       if (res.success) {
         this.categoryData = res.data.cate
       }
-      return getCategoryDetailData('/lk005')
+      return getCategoryDetailData('/lk001')
     }).then(res => {
-      console.log(res)
       if (res.success) {
         this.categoryDetailData = res.data.cate
       }
@@ -61,11 +70,26 @@ export default {
         } else {
           this.leftScroll.refresh()
         }
+        let cateIndex = this.$route.params.cateIndex
+        if (cateIndex) {
+          this.selectLeftItem(cateIndex + 1)
+        }
+        this.showScroll = true
       })
     })
+    // let cateIndex = this.$route.params.cateIndex
   },
   methods: {
     selectLeftItem (index) {
+      console.log(index)
+      // 1.置顶选中栏
+      setTimeout(() => {
+        let menuList = this.$refs.menuList
+        let el = menuList[index]
+        this.leftScroll.scrollToElement(el, 300)
+      })
+      // 2.右方加载动画
+      this.showingRightLoading = true
       this.currentIndex = index
       let param
       if (index >= 9) {
@@ -73,10 +97,14 @@ export default {
       } else {
         param = `/lk00${index + 1}`
       }
+      // 3.加载数据
       getCategoryDetailData(param).then(res => {
         if (res.success) {
           this.categoryDetailData = res.data.cate
-          this.$refs.horizScoll.refreshScroll()
+          // 4.右方展示数据回到顶部
+          this.$refs.categoryItem.refresh()
+          // 5.关闭加载动画
+          this.showingRightLoading = false
         }
       })
     }
@@ -100,7 +128,7 @@ export default {
     .category-left-wrapper {
       background-color: #f4f4f4;
       width: 5.3125rem;
-      flex: 0 0 5.3125rem;
+      flex: 0 0 30%;
       .left-content {
         .left-item {
           padding: 0.75rem 0;
@@ -126,6 +154,7 @@ export default {
       }
     }
     .category-right-wrapper {
+      width: 70%;
     }
   }
 }

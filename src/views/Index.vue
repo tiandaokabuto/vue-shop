@@ -7,7 +7,7 @@
     <van-tabbar-item
     v-for="(item, index) in tabbars" :key="index"
     @click="tab(index, item.name)"
-    :info="item.name === 'cart' ? goodsNum : '' "
+    :info="item.name === 'cart' ? (shopCartNums === 0? '' : shopCartNums) : '' "
     >
       <span :class="currIndex === index ? active : '' ">{{item.title}}</span>
       <img slot="icon" slot-scope="props" :src="props.active ? item.active : item.normal">
@@ -23,7 +23,7 @@
 
 <script>
 import { Tabbar, TabbarItem } from 'vant'
-import { mapActions } from 'vuex'
+import { mapActions, mapGetters } from 'vuex'
 export default {
   data () {
     return {
@@ -69,7 +69,7 @@ export default {
     [TabbarItem.name]: TabbarItem
   },
   methods: {
-    ...mapActions(['autoLogin']),
+    ...mapActions(['autoLogin', 'getCart']),
     tab (index, name) {
       this.currIndex = index
       this.active = index
@@ -78,9 +78,33 @@ export default {
     }
   },
   computed: {
-    goodsNum () {
-      return 1
-    }
+    ...mapGetters(['shopCartNums'])
+  },
+  watch: {
+    $route: {
+      handler (val, oldval) {
+        switch (val.name) {
+          case 'home':
+            this.active = 0
+            break
+          case 'category':
+            this.active = 1
+            break
+          case 'eat':
+            this.active = 2
+            break
+          case 'cart':
+            this.active = 3
+            break
+          case 'mine':
+            this.active = 4
+            break
+          default:
+            break
+        }
+      }
+    },
+    deep: true
   },
   mounted () {
     switch (this.$route.name) {
@@ -103,6 +127,7 @@ export default {
         break
     }
     this.autoLogin()
+    this.getCart()
   }
 }
 </script>

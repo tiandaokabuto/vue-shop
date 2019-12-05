@@ -23,6 +23,11 @@ export default {
   },
   components: {
 
+  },
+  methods: {
+    gotoCategory (index) {
+      this.$router.push({ name: 'category', params: { cateIndex: index } })
+    }
   }
 }
 </script>
