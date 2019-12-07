@@ -143,7 +143,6 @@ export default {
   methods: {
     ...mapActions(['getCart', 'addToCart', 'reduceGoods', 'selectSingleGoods', 'seleceAllGoods', 'deleteSelectedGoods']),
     add (item) {
-      console.log(item)
       this.addToCart(item)
     },
     reduce (id) {
@@ -165,7 +164,7 @@ export default {
       })
     },
     submit () {
-      console.log('submit')
+      this.$router.push({ name: 'order' })
     }
   }
 }

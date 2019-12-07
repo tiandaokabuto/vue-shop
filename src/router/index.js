@@ -60,7 +60,10 @@ const routes = [
     {
       path: 'cart',
       name: 'cart',
-      component: () => import('../views/Cart.vue')
+      component: () => import('../views/Cart.vue'),
+      meta: {
+        keepAlive: true
+      }
     },
     // eat页面
     {
@@ -79,6 +82,30 @@ const routes = [
     path: '/vipPay',
     name: 'vippay',
     component: () => import('../views/mine/vip/MyVIPPay.vue')
+  },
+  // 订单页面
+  {
+    name: 'order',
+    path: '/order',
+    component: () => import('../views/Order.vue'),
+    children: [{
+      name: 'orderlist',
+      path: 'orderList',
+      component: () => import('../views/order/OrderList.vue')
+    }, {
+      name: 'address',
+      path: 'address',
+      component: () => import('../views/order/OrderAddress.vue'),
+      children: [{
+        name: 'addaddress',
+        path: 'addAddress',
+        component: () => import('../views/order/address/AddAddress.vue')
+      }, {
+        name: 'editaddress',
+        path: 'editAddress',
+        component: () => import('../views/order/address/EditAddress.vue')
+      }]
+    }]
   }
 ]
 

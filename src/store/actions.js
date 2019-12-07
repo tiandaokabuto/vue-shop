@@ -48,7 +48,25 @@ export default {
   seleceAllGoods ({ commit }, allChecked) {
     commit('SELECT_ALL_GOODS', allChecked)
   },
+  // 删除选中的商品
   deleteSelectedGoods ({ commit }) {
     commit('DELETE_SELETE_GOODS')
+  },
+  // 获取地址信息
+  getAddress ({ commit }) {
+    commit('GET_ADDRESS')
+  },
+  // 添加地址信息
+  addUserAddress ({ commit }, address) {
+    commit('ADD_USER_ADDRESS', address)
+  },
+  editUserAddress ({ commit }, address) {
+    commit('EDIT_USER_ADDRESS', address)
+  },
+  deleteUserAddress ({ commit }, id) {
+    commit('DELETE_USER_ADDRESS', id)
+  },
+  setSelectedAddress ({ commit }, address) {
+    commit('SET_SELECTED_ADDRESS', address)
   }
 }

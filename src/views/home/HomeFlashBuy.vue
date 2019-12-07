@@ -66,7 +66,7 @@
 
 <script>
 import { mapActions } from 'vuex'
-import { CountDown } from 'vant'
+import { CountDown, Toast } from 'vant'
 import BetterScroll from 'better-scroll'
 export default {
   data () {
@@ -109,6 +109,10 @@ export default {
     },
     add (item) {
       this.addToCart(item)
+      Toast({
+        message: '已加入购物车',
+        duration: 800
+      })
     }
   }
 }

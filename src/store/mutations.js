@@ -28,10 +28,8 @@ export default {
   'ADD_TO_CART': (state, item) => {
     let shopCart = state.shopCart
     if (shopCart[item.id]) {
-      console.log('已存在')
       shopCart[item.id]['nums']++
     } else {
-      console.log('不存在')
       shopCart[item.id] = {
         'nums': 1,
         'id': item.id,
@@ -47,7 +45,6 @@ export default {
   // 7.获得购物车的信息
   'GET_CART': (state) => {
     let shopCart = getLocalStore('shopCart')
-    console.log(shopCart)
     if (shopCart) {
       state.shopCart = JSON.parse(shopCart)
     }
@@ -56,7 +53,6 @@ export default {
   'REDUCE_GOODS': (state, id) => {
     let shopCart = state.shopCart
     let goods = shopCart[id]
-    console.log(goods)
     if (goods) {
       goods['nums']--
       if (goods['nums'] === 0) {
@@ -95,5 +91,46 @@ export default {
     })
     state.shopCart = { ...shopCart }
     setLocalStore('shopCart', state.shopCart)
+  },
+  // 12.获得用户购物车信息
+  'GET_ADDRESS': (state) => {
+    let userAddress = getLocalStore('userAddress')
+    if (userAddress) {
+      state.userAddress = JSON.parse(userAddress)
+    }
+  },
+  // 13.添加用户收货地址
+  'ADD_USER_ADDRESS': (state, address) => {
+    let userAddress = state.userAddress
+    userAddress.push(address)
+    state.userAddress = [...userAddress]
+    setLocalStore('userAddress', state.userAddress)
+  },
+  // 14.修改用户收货地址
+  'EDIT_USER_ADDRESS': (state, address) => {
+    let userAddress = state.userAddress
+    for (let i = 0; i < userAddress.length; i++) {
+      if (userAddress[i].id === address.id) {
+        userAddress[i] = address
+        break
+      }
+    }
+    state.userAddress = [...userAddress]
+    setLocalStore('userAddress', state.userAddress)
+  },
+  // 15.删除用户收货地址
+  'DELETE_USER_ADDRESS': (state, id) => {
+    let userAddress = state.userAddress
+    for (let i = 0; i < userAddress.length; i++) {
+      if (userAddress[i].id === id) {
+        userAddress.splice(i, 1)
+        break
+      }
+    }
+    state.userAddress = [...userAddress]
+    setLocalStore('userAddress', state.userAddress)
+  },
+  'SET_SELECTED_ADDRESS': (state, address) => {
+    state.selectedAddress = address
   }
 }

@@ -7,7 +7,8 @@ export default {
     // user_id: '001',
     // user_name: 'kabuto'
   },
-  Address: {},
+  userAddress: [],
   active: 0,
-  subtitleIndex: 0
+  subtitleIndex: 0,
+  selectedAddress: {}
 }

@@ -51,6 +51,7 @@
 
 <script>
 import { mapActions } from 'vuex'
+import { Toast } from 'vant'
 export default {
   data () {
     return {
@@ -64,6 +65,10 @@ export default {
     ...mapActions(['addToCart']),
     add (item) {
       this.addToCart(item)
+      Toast({
+        message: '已加入购物车',
+        duration: 800
+      })
     }
   }
 }
