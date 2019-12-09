@@ -17,7 +17,10 @@ const routes = [
     children: [{
       path: 'home',
       name: 'home',
-      component: () => import('../views/Home.vue')
+      component: () => import('../views/Home.vue'),
+      meta: {
+        keepAlive: true
+      }
     },
     // mine页面
     {
@@ -69,7 +72,10 @@ const routes = [
     {
       path: 'eat',
       name: 'eat',
-      component: () => import('../views/Eat.vue')
+      component: () => import('../views/Eat.vue'),
+      meta: {
+        keepAlive: true
+      }
     }]
   },
   // 登录页面

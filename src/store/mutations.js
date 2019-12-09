@@ -1,9 +1,10 @@
-import { setLocalStore, getLocalStore } from '../utils/global'
+import { setLocalStore, getLocalStore, removeLocalStore } from '../utils/global'
+// import Vue from 'vue'
 export default {
   // 1.设置用户信息
   'SET_USER_INFO': (state, userInfo) => {
-    state.userInfo = JSON.parse(userInfo)
-    // setLocalStore('userInfo', state.userInfo)
+    state.userInfo = userInfo
+    setLocalStore('userInfo', state.userInfo)
   },
   // 2.设置用户名
   'SET_USER_NAME': (state, name) => {
@@ -40,7 +41,29 @@ export default {
       }
     }
     state.shopCart = { ...shopCart }
+    // state.shopCart = JSON.parse(JSON.stringify(shopCart))
     setLocalStore('shopCart', state.shopCart)
+    // if (state.shopCart[item.id]) {
+    //   state.shopCart[item.id]['nums']++
+    // } else {
+    //   Vue.set(state.shopCart, item.id, {
+    //     'nums': 1,
+    //     'id': item.id,
+    //     'name': item.product_name,
+    //     'price': item.price,
+    //     'smallImage': item.small_image,
+    //     'checked': true
+    //   })
+    //   state.shopCart[item.id] = {
+    //     'nums': 1,
+    //     'id': item.id,
+    //     'name': item.product_name,
+    //     'price': item.price,
+    //     'smallImage': item.small_image,
+    //     'checked': true
+    //   }
+    // }
+    // setLocalStore('shopCart', state.shopCart)
   },
   // 7.获得购物车的信息
   'GET_CART': (state) => {
@@ -60,6 +83,7 @@ export default {
       }
     }
     state.shopCart = { ...shopCart }
+    // state.shopCart = JSON.parse(JSON.stringify(shopCart))
     setLocalStore('shopCart', state.shopCart)
   },
   // 9.单选/取消商品
@@ -70,6 +94,7 @@ export default {
       goods.checked = !goods.checked
     }
     state.shopCart = { ...shopCart }
+    // state.shopCart = JSON.parse(JSON.stringify(shopCart))
     setLocalStore('shopCart', shopCart)
   },
   // 10.全选/全取消商品
@@ -79,6 +104,7 @@ export default {
       goods.checked = allChecked
     })
     state.shopCart = { ...shopCart }
+    // state.shopCart = JSON.parse(JSON.stringify(shopCart))
     setLocalStore('shopCart', state.shopCart)
   },
   // 11.删除购物车的商品
@@ -90,6 +116,7 @@ export default {
       }
     })
     state.shopCart = { ...shopCart }
+    // state.shopCart = JSON.parse(JSON.stringify(shopCart))
     setLocalStore('shopCart', state.shopCart)
   },
   // 12.获得用户购物车信息
@@ -104,6 +131,7 @@ export default {
     let userAddress = state.userAddress
     userAddress.push(address)
     state.userAddress = [...userAddress]
+    // state.userAddress = JSON.parse(JSON.stringify(userAddress))
     setLocalStore('userAddress', state.userAddress)
   },
   // 14.修改用户收货地址
@@ -116,6 +144,7 @@ export default {
       }
     }
     state.userAddress = [...userAddress]
+    // state.userAddress = JSON.parse(JSON.stringify(userAddress))
     setLocalStore('userAddress', state.userAddress)
   },
   // 15.删除用户收货地址
@@ -128,9 +157,18 @@ export default {
       }
     }
     state.userAddress = [...userAddress]
+    // state.userAddress = JSON.parse(JSON.stringify(userAddress))
     setLocalStore('userAddress', state.userAddress)
   },
+  // 16.选择收货地址
   'SET_SELECTED_ADDRESS': (state, address) => {
     state.selectedAddress = address
+  },
+  'REMOVE_USER_INFO': (state) => {
+    state.userInfo = {}
+    state.shopCart = {}
+    removeLocalStore('userInfo')
+    removeLocalStore('shopCart')
+    removeLocalStore('userAddress')
   }
 }

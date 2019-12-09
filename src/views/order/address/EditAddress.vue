@@ -45,6 +45,11 @@ export default {
     onSave (content) {
       content['address'] = content.province + content.city + content.county + content.addressDetail
       this.editUserAddress(content)
+      Toast({
+        message: '保存成功',
+        duration: 800
+      })
+      this.back()
     },
     onDelete (content) {
       this.deleteUserAddress(content.id)

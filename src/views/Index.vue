@@ -18,12 +18,14 @@
       <router-view v-if="$route.meta.keepAlive"/>
     </keep-alive>
     <router-view v-if="!$route.meta.keepAlive"/>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
 <script>
 import { Tabbar, TabbarItem } from 'vant'
 import { mapActions, mapGetters } from 'vuex'
+// import axios from 'axios'
 export default {
   data () {
     return {
@@ -73,8 +75,7 @@ export default {
     tab (index, name) {
       this.currIndex = index
       this.active = index
-      console.log(name)
-      this.$router.push({ name: name })
+      this.$router.push({ name: name }).catch(err => { if (err) {} })
     }
   },
   computed: {
@@ -128,6 +129,9 @@ export default {
     }
     this.autoLogin()
     this.getCart()
+    // axios.get('/api/test?a=1&b=2').then(res => {
+    //   console.log(res)
+    // })
   }
 }
 </script>

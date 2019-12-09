@@ -7,9 +7,9 @@ export default {
   // 获取用户信息自动登录
   autoLogin ({ commit }) {
     let userInfo = getLocalStore('userInfo')
-    console.log(userInfo)
     if (userInfo) {
-      commit('SET_USER_INFO', userInfo)
+      // 从LocalStorage中获取的用户信息是JSON格式，所以要进行转换
+      commit('SET_USER_INFO', JSON.parse(userInfo))
     }
   },
   // 修改用户昵称
@@ -68,5 +68,8 @@ export default {
   },
   setSelectedAddress ({ commit }, address) {
     commit('SET_SELECTED_ADDRESS', address)
+  },
+  logOut ({ commit }) {
+    commit('REMOVE_USER_INFO')
   }
 }

@@ -49,7 +49,6 @@ export default {
     initScroll () {
       let scrollMenuWidth = 0
       let el = this.$refs.menuItem
-      console.log(el)
       // 计算Item的宽度总和
       for (let i = 0; i < el.length; i++) {
         scrollMenuWidth += el[i].clientWidth
@@ -57,8 +56,10 @@ export default {
       // 给Item的包裹层设置宽度
       this.$refs.scrollMenuList.style.width = scrollMenuWidth + 'px'
       this.ulWidth = scrollMenuWidth
-      // if (this.horizontalScroll) {
+      // if (!this.horizontalScroll) {
 
+      // } else {
+      //   this.horizontalScroll.refresh()
       // }
       this.horizontalScroll = new BetterScroll('.scroll-menu-wrapper', {
         startX: 0,

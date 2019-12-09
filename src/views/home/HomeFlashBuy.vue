@@ -81,9 +81,22 @@ export default {
     [CountDown.name]: CountDown
   },
   mounted () {
+    console.log('flashbuy mounted')
     this.$nextTick(() => {
       this.init()
     })
+  },
+  beforeUpdate () {
+    console.log('flashbuy beforeUpdate')
+  },
+  updated () {
+    console.log('flashbuy updated')
+  },
+  beforeDestroy () {
+    console.log('flashbuy beforeDestory')
+  },
+  destroyed () {
+    console.log('flashbuy destory')
   },
   methods: {
     ...mapActions(['addToCart']),

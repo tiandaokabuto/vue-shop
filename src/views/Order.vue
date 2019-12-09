@@ -317,7 +317,7 @@ export default {
       flex-direction: row;
       flex-wrap: nowrap;
       align-items: center;
-      justify-content: start;
+      justify-content: flex-start;
       height: 4rem;
       width: 80%;
       overflow: hidden;

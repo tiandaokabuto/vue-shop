@@ -12,7 +12,7 @@
       <img src="../../assets/images/icon/seal.png" alt="">
       <span class="tipsText">安心退</span>
     </div>
-    <div>
+    <div @click="goToVIP">
       <img class="adImg" :src="home_ad">
     </div>
   </div>
@@ -28,8 +28,10 @@ export default {
   props: {
     home_ad: String
   },
-  components: {
-
+  methods: {
+    goToVIP () {
+      this.$router.push({ name: 'myvip' })
+    }
   }
 }
 </script>

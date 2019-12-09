@@ -48,7 +48,8 @@ export default {
     }
   },
   mounted () {
-    this.activeItem = this.$route.query.item
+    console.log(this.$route.query.item)
+    this.activeItem = this.$route.query.item.toString()
   }
 }
 </script>

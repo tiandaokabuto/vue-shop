@@ -106,19 +106,16 @@
       </div>
     </transition>
     <!-- 加载 -->
-    <van-overlay :show="isShowLoading">
-      <div class="loading-wrapper">
-        <van-loading type="spinner" class="loading" />
-      </div>
-    </van-overlay>
+    <loading :show="isShowLoading"></loading>
   </div>
 </template>
 
 <script>
 import Scroll from '../../components/common/HorizontalScroll'
+import Loading from '../../components/common/Loading'
 import VipItem from './vip/MyVIPItem'
 import { getVipContent } from '../../serve/api/index'
-import { Sticky, Overlay, Loading } from 'vant'
+import { Sticky, Overlay } from 'vant'
 export default {
   data () {
     return {
@@ -144,9 +141,9 @@ export default {
   components: {
     Scroll,
     VipItem,
+    Loading,
     [Sticky.name]: Sticky,
-    [Overlay.name]: Overlay,
-    [Loading.name]: Loading
+    [Overlay.name]: Overlay
   },
   mounted () {
     getVipContent().then(response => {
@@ -164,6 +161,17 @@ export default {
         this.isShowBottomBtn = false
       }
     }
+  },
+  beforeRouteEnter (to, from, next) {
+    console.log(to.name)
+    if (from.name === 'home') {
+      console.log('不需要缓存')
+      to.meta.keepAlive = false
+    } else {
+      console.log('需要缓存')
+      to.meta.keepAlive = true
+    }
+    next()
   }
 }
 </script>

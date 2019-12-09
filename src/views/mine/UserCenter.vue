@@ -26,6 +26,7 @@
       <van-cell title="手机号"
                 :value="userInfo.phone" />
     </van-cell-group>
+    <van-button size="large" style="margin-top: 1rem" @click="loginOut">退出登录</van-button>
     <!-- 性别选择弹出层 -->
     <van-popup v-model="showChangeSex"
     round
@@ -64,7 +65,7 @@
 
 <script>
 import { mapState, mapActions } from 'vuex'
-import { Toast, DatetimePicker } from 'vant'
+import { Toast, DatetimePicker, Popup, Button, Dialog } from 'vant'
 import { Formate } from '../../utils/global'
 export default {
   data () {
@@ -87,7 +88,7 @@ export default {
     }
   },
   methods: {
-    ...mapActions(['changeSex', 'setBirthday']),
+    ...mapActions(['changeSex', 'setBirthday', 'logOut']),
     // 1.返回
     back () {
       this.$router.back()
@@ -115,10 +116,19 @@ export default {
     onChangeBirthday () {
       this.showSelectBirthday = true
     },
-    // 6.修改生日
-    // selectBirthday () {
-
-    // },
+    // 6.退出登录
+    loginOut () {
+      Dialog.confirm({
+        message: '是否退出登录？'
+      }).then(() => {
+        this.logOut()
+        Toast({
+          message: '退出成功',
+          duration: 800
+        })
+        this.back()
+      })
+    },
     // 7.格式化显示的日期
     formatter (type, value) {
       if (type === 'year') {
@@ -146,7 +156,10 @@ export default {
   },
   components: {
     [Toast.name]: Toast,
-    [DatetimePicker.name]: DatetimePicker
+    [DatetimePicker.name]: DatetimePicker,
+    [Popup.name]: Popup,
+    [Button.name]: Button,
+    [Dialog.name]: Dialog
   }
 }
 </script>

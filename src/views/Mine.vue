@@ -94,11 +94,11 @@
                 is-link
                 @click="onFeedBack" />
     </van-cell-group>
-    <!-- <keep-alive>
+    <keep-alive>
       <router-view v-if="this.$route.meta.keepAlive"></router-view>
     </keep-alive>
-    <router-view v-if="!this.$route.meta.keepAlive"></router-view> -->
-    <router-view></router-view>
+    <router-view v-if="!this.$route.meta.keepAlive"></router-view>
+    <!-- <router-view></router-view> -->
   </div>
 </template>
 
@@ -156,7 +156,7 @@ export default {
     goToMyAddredd () {
       // 判断是否登录
       if (this.userInfo.token) {
-        this.$router.push({ name: 'myAddress' })
+        this.$router.push({ name: 'address' })
       } else {
         this.login()
       }

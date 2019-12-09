@@ -67,6 +67,18 @@ export default {
       }
       this.showing = true
     })
+  },
+  beforeUpdate () {
+    console.log('beforeUpdate')
+  },
+  updated () {
+    console.log('updated')
+  },
+  beforeDestroy () {
+    console.log('beforeDestory')
+  },
+  destroyed () {
+    console.log('destory')
   }
 }
 </script>

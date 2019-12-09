@@ -132,14 +132,15 @@ export default {
     Loading
   },
   mounted () {
+    console.log('mounted')
     getGuessYouLike().then(res => {
       if (res.success) {
         this.youLike_product_lists = res.data.product_list
         this.showing = true
       }
-      console.log(this.shopCart)
     })
   },
+
   methods: {
     ...mapActions(['getCart', 'addToCart', 'reduceGoods', 'selectSingleGoods', 'seleceAllGoods', 'deleteSelectedGoods']),
     add (item) {

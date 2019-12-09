@@ -50,6 +50,7 @@ export default {
     }
   },
   mounted () {
+    console.log('swiper mounted')
     this.$nextTick(() => {
       this.init()
       this.swiperScroll.on('scrollEnd', () => {

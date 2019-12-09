@@ -134,7 +134,7 @@ export default {
   position: absolute;
   left: 30%;
   right: 0;
-  top: 2.9rem;
+  top: 2.7rem;
   bottom: 0rem;
   overflow: hidden;
   // 防止抖动
@@ -158,6 +158,7 @@ export default {
           background: white;
           padding: 0.36rem 0.36rem 0 0.36rem;
           .item {
+            position: relative;
             display: flex;
             align-items: center;
             justify-content: flex-start;
@@ -180,23 +181,30 @@ export default {
               line-height: 0.8rem;
               font-size: 0.65rem;
               color: rgb(147, 153, 159);
-              margin-bottom: 0.16rem;
+              margin-bottom: 0.4rem;
             }
-            .price-icon {
-              display: flex;
-              align-items: center;
+            // .price-icon {
+            //   display: flex;
+            //   justify-content: center;
+            //   align-items: center;
               .item-price {
+                left: 4.5rem;
+                position: absolute;
                 font-size: 0.75rem;
                 color: red;
               }
               .item-ogprice {
+                position: absolute;
+                left: 6.5rem;
                 padding-left: 0.5rem;
                 text-decoration: line-through;
                 font-size: 0.6875rem;
                 color: #b2b2b2;
               }
               .item-icon {
-                padding-left: 3rem;
+                position: absolute;
+                right: 0;
+                bottom: 0.3rem;
                 width: 1.875rem;
                 .icon {
                   fill: #999;
@@ -209,7 +217,7 @@ export default {
                   height: 1.5rem;
                 }
               }
-            }
+            // }
           }
         }
       }

@@ -17,6 +17,8 @@ Vue.use(CouponCell).use(CouponList)
 Vue.use(RadioGroup).use(Radio)
 Vue.use(waterfall)
 
+require('./mock')
+
 Vue.config.productionTip = false
 
 new Vue({
